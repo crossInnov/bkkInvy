@@ -34,7 +34,7 @@ namespace Logger
             if (_logger == null)
             {
                 _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-                log4net.GlobalContext.Properties["LogFileName"] = path + "YouPrice." + programType + "_" + System.Environment.UserName + "_" + System.Environment.MachineName + "_" + DateTime.Now.ToString("yyyyMMdd_Hmmss") + ".log";
+                log4net.GlobalContext.Properties["LogFileName"] = path + "PROJECT." + programType + "_" + System.Environment.UserName + "_" + System.Environment.MachineName + "_" + DateTime.Now.ToString("yyyyMMdd_Hmmss") + ".log";
                 log4net.Config.XmlConfigurator.Configure();
             }
 
