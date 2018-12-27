@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PresenciaEmpleadosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Empleados">
+    <Key>
+      <PropertyRef Name="EmpleadoID" />
+    </Key>
+    <Property Name="EmpleadoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Apelido" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Puesto" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Loguin" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="contrasena" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Jornadas" Relationship="Self.FK_Jornadas_Empleados" FromRole="Empleados" ToRole="Jornadas" />
+  </EntityType>
+  <EntityType Name="Jornadas">
+    <Key>
+      <PropertyRef Name="JornadaID" />
+    </Key>
+    <Property Name="JornadaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dia" Type="DateTime" Precision="0" />
+    <Property Name="EmpleadoID" Type="Int32" />
+    <Property Name="Horario" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Empleados" Relationship="Self.FK_Jornadas_Empleados" FromRole="Jornadas" ToRole="Empleados" />
+  </EntityType>
+  <Association Name="FK_Jornadas_Empleados">
+    <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+    <End Role="Jornadas" Type="Self.Jornadas" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Empleados">
+        <PropertyRef Name="EmpleadoID" />
+      </Principal>
+      <Dependent Role="Jornadas">
+        <PropertyRef Name="JornadaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PresenciaEmpleadosEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+    <EntitySet Name="Jornadas" EntityType="Self.Jornadas" />
+    <AssociationSet Name="FK_Jornadas_Empleados" Association="Self.FK_Jornadas_Empleados">
+      <End Role="Empleados" EntitySet="Empleados" />
+      <End Role="Jornadas" EntitySet="Jornadas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
